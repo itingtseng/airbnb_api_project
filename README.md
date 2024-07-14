@@ -1,8 +1,8 @@
-# AirBnB
+# [AirBnB]
 
 ## Database Schema Design
 
-./images/AirBnb.png
+[./images/AirBnb.png]
 
 ## API Documentation
 
