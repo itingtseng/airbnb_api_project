@@ -13,8 +13,8 @@
     "dev:backend": "npm install --prefix backend start",
     "sequelize": "npm run --prefix backend sequelize",
     "sequelize-cli": "npm run --prefix backend sequelize-cli",
-    "start": "npm start",
-    "build": "npm install && npm run build && npm run sequelize --prefix backend db:migrate && npm run sequelize --prefix backend db:seed:all"
+    "start": "npm start --prefix backend",
+    "build": "npm run --prefix backend build"
   },
   "keywords": [],
   "author": "",
