@@ -15,11 +15,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      firstName: {
+      firstname: {
         type: Sequelize.STRING(256),
         allowNull: false
       },
-      lastName: {
+      lastname: {
         type: Sequelize.STRING(256),
         allowNull: false
       },
