@@ -10,30 +10,6 @@ const router = express.Router();
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
-// Sign up
-router.post(
-    '/',
-    async (req, res) => {
-      const { firstname, lastname, email, password, username } = req.body;
-      const hashedPassword = bcrypt.hashSync(password);
-      const user = await User.create({ firstname, lastname, email, username, hashedPassword });
-  
-      const safeUser = {
-        id: user.id,
-        firstname: user.firstname,
-        lastname: user.lastname,
-        email: user.email,
-        username: user.username,
-      };
-  
-      await setTokenCookie(res, safeUser);
-  
-      return res.json({
-        user: safeUser
-      });
-    }
-  );
-
   const validateSignup = [
     check('email')
       .exists({ checkFalsy: true })
@@ -49,7 +25,7 @@ router.post(
       .withMessage('Username cannot be an email.'),
     check('firstname')
       .exists(),
-    check('firstname')
+    check('lastname')
       .exists(),
     check('password')
       .exists({ checkFalsy: true })
