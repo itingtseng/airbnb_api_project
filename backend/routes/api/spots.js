@@ -37,6 +37,23 @@ router.get('/', async (req, res, next) => {
     res.json(spots);
 });
 
+// Get all Spots owned by the Current User
+router.get('/current', async (req, res) => {
+        const { user } = req;
+        console.log(user)
+      if (user) {
+        const spot = await Spot.findAll({
+            where: {
+                ownerId: user.id,
+            }
+        });
+        return res.json({
+          spot
+        });
+      } else return res.json({ spot: null });
+    }
+);
+
 // Get details of a Spot from an id
 router.get('/:id', async (req, res, next) => {
     let spot = await Spot.findByPk(req.params.id, {
@@ -65,7 +82,6 @@ router.get('/:id', async (req, res, next) => {
     res.json(spot);
 });
   
-// Get all Spots owned by the Current User
 
 
 module.exports = router;
