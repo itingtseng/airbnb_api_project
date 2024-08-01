@@ -5,17 +5,17 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
       // define association here
-      User.hasOne(
+      User.hasMany(
         models.Spot,
-        { foreignKey: 'ownerId', onDelete: 'CASCADE', hooks: true },
+        { foreignKey: 'ownerId', onDelete: 'CASCADE' },
       )
-      User.hasOne(
+      User.hasMany(
         models.Review,
-        { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true },
+        { foreignKey: 'userId', onDelete: 'CASCADE' },
       )
-      User.hasOne(
+      User.hasMany(
         models.Booking,
-        { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true },
+        { foreignKey: 'userId', onDelete: 'CASCADE' },
       )
     }
   };
@@ -34,11 +34,11 @@ module.exports = (sequelize, DataTypes) => {
           }
         }
       },
-      firstname: {
+      firstName: {
         type: DataTypes.STRING,
         allowNull: false
       },
-      lastname: {
+      lastName: {
         type: DataTypes.STRING,
         allowNull: false
       },

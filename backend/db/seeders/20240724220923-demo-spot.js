@@ -1,6 +1,7 @@
 'use strict';
 
 const { Spot } = require('../models');
+const { Op } = require('sequelize');
 const bcrypt = require("bcryptjs");
 
 let options = {};
@@ -21,11 +22,9 @@ module.exports = {
         lng: 40.74588,
         name: 'nameone',
         description: 'descriptionone',
-        price: 100,
-        spotImage: 2,
+        price: 100
       },
       {
-        ownerId: 2,
         address: 'addresstwo',
         city: 'citytwo',
         state: 'statetwo',
@@ -34,11 +33,9 @@ module.exports = {
         lng: 39.74588,
         name: 'nametwo',
         description: 'descriptiontwo',
-        price: 100,
-        spotImage: 2,
+        price: 100
       },
       {
-        ownerId: 3,
         address: 'addressthree',
         city: 'citythree',
         state: 'statethree',
@@ -47,8 +44,7 @@ module.exports = {
         lng: 38.74588,
         name: 'namethree',
         description: 'descriptionthree',
-        price: 100,
-        spotImage: 2,
+        price: 100
       }
     ], { validate: true });
   },

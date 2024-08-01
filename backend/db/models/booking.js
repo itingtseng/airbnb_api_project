@@ -13,11 +13,11 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Booking.belongsTo(
         models.User,
-          { foreignKey: 'userId' }
+        { foreignKey: 'userId', as: 'User' }
       )
       Booking.belongsTo(
         models.Spot,
-          { foreignKey: 'spotId' }
+        { foreignKey: 'spotId', as: 'Spot' }
       )
     }
   }
@@ -32,21 +32,19 @@ module.exports = (sequelize, DataTypes) => {
     },
     startDate: {
       type: DataTypes.DATE,
+      allowNull: false,
       validate: {
-        isNotInPast(value) {
-          if (moment(value).isBefore(moment())) {
-            throw new Error('startDate cannot be in the past');
-          }
+        isDate: {
+          msg: 'Start date must be a valid date'
         }
       }
     },
     endDate: {
       type: DataTypes.DATE,
+      allowNull: false,
       validate: {
-        isAfterStartDate(value) {
-          if (value <= this.startDate) {
-            throw new Error('endDate cannot be on or before startDate');
-          }
+        isDate: {
+          msg: 'End date must be a valid date'
         }
       }
     }

@@ -1,7 +1,5 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const {  Model, Validator } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Spot extends Model {
     /**
@@ -11,28 +9,40 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Spot.hasOne(
+      Spot.hasMany(
         models.Review,
-        { foreignKey: 'spotId', onDelete: 'CASCADE', hooks: true },
+        {
+          foreignKey: 'spotId',
+          onDelete: 'CASCADE'
+        },
       )
-      Spot.hasOne(
+      Spot.hasMany(
         models.Booking,
-        { foreignKey: 'spotId', onDelete: 'CASCADE', hooks: true },
+        {
+          foreignKey: 'spotId',
+          onDelete: 'CASCADE'
+        },
       )
       Spot.hasMany(
         models.Image,
-        { foreignKey: 'imageableId', onDelete: 'CASCADE', hooks: true },
+        {
+          foreignKey: 'imageableId',
+          as: 'SpotImages',
+          onDelete: 'CASCADE'
+        },
       )
       Spot.belongsTo(
         models.User,
-          { foreignKey: 'ownerId' }
+        {
+          foreignKey: 'ownerId',
+          as: 'Owner'
+        }
       )
     }
   }
   Spot.init({
     ownerId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
     },
     address: {
       type: DataTypes.STRING,
@@ -81,17 +91,18 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.FLOAT,
       allowNull: false,
       validate: {
-        min: 0,
+        min: 0.01,
       }
-
-    },
-    spotImage: {
-      type: DataTypes.INTEGER,
 
     }
   }, {
     sequelize,
     modelName: 'Spot',
+    defaultScope: {
+      attributes: {
+        exclude: ["createdAt", "updatedAt"]
+      }
+    }
   });
   return Spot;
 };

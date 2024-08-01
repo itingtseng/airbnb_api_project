@@ -14,19 +14,21 @@ const { handleValidationErrors } = require('../../utils/validation');
     check('email')
       .exists({ checkFalsy: true })
       .isEmail()
-      .withMessage('Please provide a valid email.'),
+      .withMessage('Invalid email'),
     check('username')
       .exists({ checkFalsy: true })
       .isLength({ min: 4 })
-      .withMessage('Please provide a username with at least 4 characters.'),
+      .withMessage('Username is required'),
     check('username')
       .not()
       .isEmail()
       .withMessage('Username cannot be an email.'),
-    check('firstname')
-      .exists(),
-    check('lastname')
-      .exists(),
+    check('firstName')
+      .exists({ checkFalsy: true })
+      .withMessage('First name is required.'),
+    check('lastName')
+      .exists({ checkFalsy: true })
+      .withMessage('Last name is required.'),
     check('password')
       .exists({ checkFalsy: true })
       .isLength({ min: 6 })
@@ -35,26 +37,47 @@ const { handleValidationErrors } = require('../../utils/validation');
   ];
 
 
-  // Sign up
+// Sign up
 router.post(
   '/',
   validateSignup,
   async (req, res) => {
-    const { firstname, lastname, email, password, username } = req.body;
+    const { firstName, lastName, email, password, username } = req.body;
     const hashedPassword = bcrypt.hashSync(password);
-    const user = await User.create({ firstname, lastname, email, username, hashedPassword });
+    const user = await User.build({ firstName, lastName, email, username, hashedPassword });
+
+    const sameemailUser = await User.findOne({
+      where: {
+          email: user.email,
+        }
+    })
+    const sameusernamelUser = await User.findOne({
+      where: {
+          username: user.username,
+        }
+    })
+  if (sameemailUser||sameusernamelUser) {
+      return res.status(500).json({
+        message: "User already exists",
+        errors: {
+        email: "User with that email already exists",
+        username: "User with that username already exists"
+      }
+      })
+  }
+    await user.save()
 
     const safeUser = {
       id: user.id,
-      firstname: user.firstname,
-      lastname: user.lastname,
+      firstName: user.firstName,
+      lastName: user.lastName,
       email: user.email,
       username: user.username,
     };
 
     await setTokenCookie(res, safeUser);
 
-    return res.json({
+    return res.status(201).json({
       user: safeUser
     });
   }

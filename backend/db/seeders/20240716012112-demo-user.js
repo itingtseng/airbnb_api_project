@@ -1,6 +1,7 @@
 'use strict';
 
 const { User } = require('../models');
+const { Op } = require('sequelize');
 const bcrypt = require("bcryptjs");
 
 let options = {};
@@ -12,22 +13,22 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     await User.bulkCreate([
       {
-        firstname: 'Firstone',
-        lastname: 'Lastone',
+        firstName: 'Firstone',
+        lastName: 'Lastone',
         email: 'demo@user.io',
         username: 'Demo-lition',
         hashedPassword: bcrypt.hashSync('password')
       },
       {
-        firstname: 'Firsttwo',
-        lastname: 'Lasttwo',
+        firstName: 'Firsttwo',
+        lastName: 'Lasttwo',
         email: 'user1@user.io',
         username: 'FakeUser1',
         hashedPassword: bcrypt.hashSync('password2')
       },
       {
-        firstname: 'Firstthree',
-        lastname: 'Lastthree',
+        firstName: 'Firstthree',
+        lastName: 'Lastthree',
         email: 'user2@user.io',
         username: 'FakeUser2',
         hashedPassword: bcrypt.hashSync('password3')

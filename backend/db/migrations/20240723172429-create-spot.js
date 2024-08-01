@@ -16,7 +16,6 @@ module.exports = {
       },
       ownerId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         references: {
           model: 'Users',
           key: 'id',
@@ -58,9 +57,6 @@ module.exports = {
       price: {
         type: Sequelize.FLOAT,
         allowNull: false,
-      },
-      spotImage: {
-        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,

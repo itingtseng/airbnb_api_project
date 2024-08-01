@@ -13,10 +13,12 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Image.belongsTo(models.Spot, {
         foreignKey: 'imageableId',
+        as: 'SpotImages',
         constraints: false
       });
       Image.belongsTo(models.Review, {
         foreignKey: 'imageableId',
+        as: 'ReviewImages',
         constraints: false
       });
     }
@@ -27,12 +29,16 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     imageableType: {
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM('spot', 'review'),
       allowNull: false,
     },
     url: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    preview: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
     }
   }, {
     sequelize,

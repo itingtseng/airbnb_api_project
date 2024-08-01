@@ -19,12 +19,16 @@ module.exports = {
         allowNull: false,
       },
       imageableType: {
-        type: Sequelize.STRING,
+        type: Sequelize.ENUM('spot', 'review'),
         allowNull: false,
       },
       url: {
         type: Sequelize.STRING,
         allowNull: false,
+      },
+      preview: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
       },
       createdAt: {
         allowNull: false,

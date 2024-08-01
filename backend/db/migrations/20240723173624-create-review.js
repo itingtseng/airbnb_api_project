@@ -40,9 +40,6 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      reviewImages: {
-        type: Sequelize.INTEGER
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

@@ -13,15 +13,25 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Review.hasMany(
         models.Image,
-        { foreignKey: 'imageableId', onDelete: 'CASCADE', hooks: true },
+        {
+          foreignKey: 'imageableId',
+          as: 'ReviewImages',
+          onDelete: 'CASCADE'
+        },
       )
       Review.belongsTo(
         models.User,
-          { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true },
+        {
+          foreignKey: 'userId',
+          as: 'User'
+        },
       )
       Review.belongsTo(
         models.Spot,
-          { foreignKey: 'spotId', onDelete: 'CASCADE', hooks: true },
+        {
+          foreignKey: 'spotId',
+          as: 'Spot'
+        },
       )
     }
   }
@@ -45,10 +55,6 @@ module.exports = (sequelize, DataTypes) => {
         isInt: true,
       }
     },
-    reviewImages: {
-      type: DataTypes.INTEGER,
-
-    }
   }, {
     sequelize,
     modelName: 'Review',
