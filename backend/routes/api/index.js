@@ -45,85 +45,71 @@ router.get(
   }
 );
 
+
+
 // Delete a Spot Image
-router.delete(
-  '/spot-images/:id',
-  async (req, res) => {
-    const { user } = req;
-    if (user) {
-      let image = await Image.findOne({
-        where:
-        {
-          id: req.params.id,
-          imageableType: 'spot'
-        }
-      })
-      if (image) {
-        let spot = await Spot.findAll({
-            ownerId: user.id
-        })
-        if (spot.id === image.imageableId) {
-          await image.destroy()
-          res.status(200).json({     
-              status: "success",
-              message: `Successfully deleted`,
-          });
-        } else {
-          return res.status(401).json({
-              message: "Authentication required"
-          })
-        }
-      } else return res.status(404).json({
-          message: "Spot Image couldn't be found"
+router.delete('/spot-images/:id', requireAuth, async (req, res) => {
+  const { user } = req
+  let image = await Image.findOne({
+    where:
+    {
+      id: req.params.id,
+      imageableType: 'spot'
+    }
+  })
+  if (image) {
+    let spots = await Spot.findAll({
+        ownerId: user.id
+    })
+    let spotFound = spots.some(spot => spot.id === image.imageableId);
+    if (spotFound) {
+      await image.destroy()
+      res.status(200).json({     
+          status: "success",
+          message: `Successfully deleted`,
       });
     } else {
-      return res.status(401).json({
-          message: "Authentication required"
+      return res.status(403).json({
+          message: "Forbidden"
       })
     }
-  }
-);
+  } else return res.status(404).json({
+      message: "Spot Image couldn't be found"
+  });    
+});
 
 // Delete a Review Image
-router.delete(
-  '/review-images/:id',
-  async (req, res) => {
-    const { user } = req;
-    if (user) {
-      let image = await Image.findOne({
-        where:
-        {
-          id: req.params.id,
-          imageableType: 'review'
-        }
-      })
-      if (image) {
-        let review = await Review.findAll({
-          userId: user.id
-        })
-        if (review.id === image.imageableId) {
-          await image.destroy()
-          res.status(200).json({
-            status: "success",
-            message: `Successfully deleted`,
-          });
-        } else {
-          return res.status(401).json({
-              message: "Authentication required"
-          })
-        }
-      } else {
-        return res.status(404).json({
-          message: "Review Image couldn't be found"
-        })
-      };
+router.delete('/review-images/:id', requireAuth, async (req, res) => {
+  const { user } = req
+  let image = await Image.findOne({
+    where:
+    {
+      id: req.params.id,
+      imageableType: 'review'
+    }
+  })
+  if (image) {
+    let reviews = await Review.findAll({
+      userId: user.id
+    })
+    let reviewFound = reviews.some(review => review.id === image.imageableId);
+    if (reviewFound) {
+      await image.destroy()
+      res.status(200).json({
+        status: "success",
+        message: `Successfully deleted`,
+      });
     } else {
-      return res.status(401).json({
-          message: "Authentication required"
+      return res.status(403).json({
+          message: "Forbidden"
       })
-    }    
-  }
-);
+    }
+  } else {
+    return res.status(404).json({
+      message: "Review Image couldn't be found"
+    })
+  };     
+});
 
 router.use('/session', sessionRouter);
 

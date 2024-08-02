@@ -1,12 +1,8 @@
-const express = require('express')
-
+const express = require('express');
 const bcrypt = require('bcryptjs');
-
-const { setTokenCookie, requireAuth } = require('../../utils/auth');
+const { setTokenCookie } = require('../../utils/auth');
 const { User } = require('../../db/models');
-
 const router = express.Router();
-
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -38,48 +34,49 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 
 // Sign up
-router.post(
-  '/',
-  validateSignup,
-  async (req, res) => {
-    const { firstName, lastName, email, password, username } = req.body;
-    const hashedPassword = bcrypt.hashSync(password);
-    const user = await User.build({ firstName, lastName, email, username, hashedPassword });
-
-    const sameemailUser = await User.findOne({
-      where: {
-          email: user.email,
-        }
-    })
-    const sameusernamelUser = await User.findOne({
-      where: {
-          username: user.username,
-        }
-    })
-  if (sameemailUser||sameusernamelUser) {
+router.post('/', validateSignup, async (req, res) => {
+  const { firstName, lastName, email, password, username } = req.body
+  const hashedPassword = bcrypt.hashSync(password)
+  const user = await User.build({ firstName, lastName, email, username, hashedPassword })
+  const sameemailUser = await User.findOne({
+    where: {
+        email: user.email,
+      }
+  })
+  const sameusernamelUser = await User.findOne({
+    where: {
+        username: user.username,
+      }
+  })
+  if (sameemailUser) {
       return res.status(500).json({
         message: "User already exists",
         errors: {
         email: "User with that email already exists",
-        username: "User with that username already exists"
       }
       })
   }
-    await user.save()
-
-    const safeUser = {
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      username: user.username,
-    };
-
-    await setTokenCookie(res, safeUser);
-
-    return res.status(201).json({
-      user: safeUser
-    });
+  if (sameusernamelUser) {
+    return res.status(500).json({
+      message: "User already exists",
+      errors: {
+      username: "User with that username already exists"
+    }
+    })
   }
-);
+  await user.save()
+  const safeUser = {
+    id: user.id,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    username: user.username,
+  };
+
+  await setTokenCookie(res, safeUser);
+
+  return res.status(201).json({
+    user: safeUser
+  });
+});
 module.exports = router;
