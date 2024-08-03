@@ -50,10 +50,17 @@ router.get(
 // Delete a Spot Image
 router.delete('/spot-images/:id', requireAuth, async (req, res) => {
   const { user } = req
+  const imageId = parseInt(req.params.id, 10); // Ensure imageId is an integer
+
+  if (isNaN(imageId)) {
+        return res.status(400).json({
+            message: "Invalid image ID"
+        });
+  }
   let image = await Image.findOne({
     where:
     {
-      id: req.params.id,
+      id: imageId,
       imageableType: 'spot'
     }
   })
@@ -81,10 +88,17 @@ router.delete('/spot-images/:id', requireAuth, async (req, res) => {
 // Delete a Review Image
 router.delete('/review-images/:id', requireAuth, async (req, res) => {
   const { user } = req
+  const imageId = parseInt(req.params.id, 10); // Ensure imageId is an integer
+
+  if (isNaN(imageId)) {
+        return res.status(400).json({
+            message: "Invalid image ID"
+        });
+  }
   let image = await Image.findOne({
     where:
     {
-      id: req.params.id,
+      id: imageId,
       imageableType: 'review'
     }
   })

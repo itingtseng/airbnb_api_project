@@ -60,9 +60,16 @@ router.get('/current', requireAuth, async (req, res) => {
 
 // Add an Image to a Review based on the Review's id
 router.post('/:id/images', requireAuth, async (req, res) => {
+    const reviewId = parseInt(req.params.id, 10); // Ensure reivewId is an integer
+
+    if (isNaN(reviewId)) {
+        return res.status(400).json({
+            message: "Invalid review ID"
+        });
+    }
     const { user } = req
     const { url } = req.body
-    let review = await Review.findByPk(req.params.id, {
+    let review = await Review.findByPk(reviewId, {
         include: [{
             model: Image,
             as: 'ReviewImages'
@@ -76,7 +83,7 @@ router.post('/:id/images', requireAuth, async (req, res) => {
                 })
             }
             const newImage = Image.build({
-                imageableId: req.params.id,
+                imageableId: reviewId,
                 imageableType: "review",
                 url: url
             })
@@ -102,7 +109,14 @@ router.post('/:id/images', requireAuth, async (req, res) => {
 router.put('/:id', requireAuth, validateReview, async (req, res) => {
     const { user } = req
     const { review, stars } = req.body
-    let savereview = await Review.findByPk(req.params.id);
+    const reviewId = parseInt(req.params.id, 10); // Ensure reivewId is an integer
+
+    if (isNaN(reviewId)) {
+        return res.status(400).json({
+            message: "Invalid review ID"
+        });
+    }
+    let savereview = await Review.findByPk(reviewId);
     if (savereview) {
         if (user.id === savereview.userId) {
             savereview.set({
@@ -131,7 +145,14 @@ router.put('/:id', requireAuth, validateReview, async (req, res) => {
 // Delete a Review
 router.delete('/:id', requireAuth, async (req, res) => {
     const { user } = req
-    let review = await Review.findByPk(req.params.id)
+    const reviewId = parseInt(req.params.id, 10); // Ensure reviewId is an integer
+
+    if (isNaN(reviewId)) {
+        return res.status(400).json({
+            message: "Invalid review ID"
+        });
+    }
+    let review = await Review.findByPk(reviewId)
     console.log('this is user.id:' + user.id)
     console.log('this is review:' + review)
     if (review) {

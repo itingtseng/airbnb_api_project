@@ -303,14 +303,21 @@ router.get('/current', requireAuth, async (req, res) => {
 
 // Get details of a Spot from an id
 router.get('/:id', async (req, res) => {
+    const spotId = parseInt(req.params.id, 10); // Ensure spotId is an integer
+
+    if (isNaN(spotId)) {
+        return res.status(400).json({
+            message: "Invalid spot ID"
+        });
+    }
     let numReviews = await Review.count({
         where: {
-            spotId: req.params.id
+            spotId: spotId
         }
     })
     const reviews = await Review.findAll({
         where: {
-            spotId: req.params.id
+            spotId: spotId
         }
     });
 
@@ -320,7 +327,7 @@ router.get('/:id', async (req, res) => {
 
     const avgStarRating = sumStars / reviews.length;
     
-    let spot = await Spot.findByPk(req.params.id, {
+    let spot = await Spot.findByPk(spotId, {
         attributes: [
             'id',
             'ownerId',
@@ -380,11 +387,18 @@ router.post('/', requireAuth, validateSpot, async (req, res) => {
 router.post('/:id/images', requireAuth, async (req, res) => {
     const { user } = req
     const { url, preview } = req.body
-    let spot = await Spot.findByPk(req.params.id);
+    const spotId = parseInt(req.params.id, 10); // Ensure spotId is an integer
+
+    if (isNaN(spotId)) {
+        return res.status(400).json({
+            message: "Invalid spot ID"
+        });
+    }
+    let spot = await Spot.findByPk(spotId);
     if (spot) {
         if (user.id === spot.ownerId) {
             const newImage = Image.build({
-                imageableId: req.params.id,
+                imageableId: spotId,
                 imageableType: "spot",
                 url: url,
                 preview
@@ -411,7 +425,14 @@ router.post('/:id/images', requireAuth, async (req, res) => {
 router.put('/:id', requireAuth, validateSpot, async (req, res) => {
     const { user } = req
     const { address, city, state, country, lat, lng, name, description, price } = req.body
-    let spot = await Spot.findByPk(req.params.id);
+    const spotId = parseInt(req.params.id, 10); // Ensure spotId is an integer
+
+    if (isNaN(spotId)) {
+        return res.status(400).json({
+            message: "Invalid spot ID"
+        });
+    }
+    let spot = await Spot.findByPk(spotId);
     if (spot) {
         if (user.id === spot.ownerId) {
             spot.set({
@@ -446,7 +467,14 @@ router.put('/:id', requireAuth, validateSpot, async (req, res) => {
 // Delete a Spot
 router.delete('/:id', requireAuth, async (req, res) => {
     const { user } = req
-    let spot = await Spot.findByPk(req.params.id)
+    const spotId = parseInt(req.params.id, 10); // Ensure spotId is an integer
+
+    if (isNaN(spotId)) {
+        return res.status(400).json({
+            message: "Invalid spot ID"
+        });
+    }
+    let spot = await Spot.findByPk(spotId)
     if (spot) {
         if (user.id === spot.ownerId) {
             await spot.destroy()
@@ -468,11 +496,18 @@ router.delete('/:id', requireAuth, async (req, res) => {
 
 // Get all Reviews by a Spot's id
 router.get('/:id/reviews', async (req, res) => {
-    let spot = await Spot.findByPk(req.params.id);
+    const spotId = parseInt(req.params.id, 10); // Ensure spotId is an integer
+
+    if (isNaN(spotId)) {
+        return res.status(400).json({
+            message: "Invalid spot ID"
+        });
+    }
+    let spot = await Spot.findByPk(spotId);
     if (spot) { 
         let review = await Review.findAll({
             where: {
-                spotId: req.params.id
+                spotId: spotId
             },
             attributes: [
                 'id',
@@ -507,17 +542,24 @@ router.get('/:id/reviews', async (req, res) => {
 router.post('/:id/reviews', requireAuth, validateReview, async (req, res) => {
     const { user } = req
     const { review, stars } = req.body
-    let spot = await Spot.findByPk(req.params.id);
+    const spotId = parseInt(req.params.id, 10); // Ensure spotId is an integer
+
+    if (isNaN(spotId)) {
+        return res.status(400).json({
+            message: "Invalid spot ID"
+        });
+    }
+    let spot = await Spot.findByPk(spotId);
     if (spot) {
         const newReview = Review.build({
             userId: user.id,
-            spotId: req.params.id,
+            spotId: spotId,
             review: review,
             stars: stars
         })
         const existingReview = await Review.findOne({
             where: {
-                spotId: req.params.id,
+                spotId: spotId,
                 userId: user.id
             }
         })
@@ -543,12 +585,19 @@ router.post('/:id/reviews', requireAuth, validateReview, async (req, res) => {
 // Get all Bookings for a Spot based on the Spot's id
 router.get('/:id/bookings', requireAuth, async (req, res) => {
     const { user } = req
-    let spot = await Spot.findByPk(req.params.id)
+    const spotId = parseInt(req.params.id, 10); // Ensure spotId is an integer
+
+    if (isNaN(spotId)) {
+        return res.status(400).json({
+            message: "Invalid spot ID"
+        });
+    }
+    let spot = await Spot.findByPk(spotId)
     if (spot) {
         if ( spot.ownerId === user.id) {
             let myspotBooking = await Booking.findAll({
                 where: {
-                    spotId: req.params.id,
+                    spotId: spotId,
                     userId: user.id
                 },
                 attributes: [
@@ -571,7 +620,7 @@ router.get('/:id/bookings', requireAuth, async (req, res) => {
         } else {
             let booking = await Booking.findAll({
                 where: {
-                    spotId: req.params.id,
+                    spotId: spotId,
                 },
                 attributes: [
                     'spotId',
@@ -591,7 +640,14 @@ router.get('/:id/bookings', requireAuth, async (req, res) => {
 // Create a Booking from a Spot based on the Spot's id
 router.post('/:id/bookings', requireAuth, validateBookingDates, async (req, res) => {
     const { user } = req
-    let spot = await Spot.findByPk(req.params.id)
+    const spotId = parseInt(req.params.id, 10); // Ensure spotId is an integer
+
+    if (isNaN(spotId)) {
+        return res.status(400).json({
+            message: "Invalid spot ID"
+        });
+    }
+    let spot = await Spot.findByPk(spotId)
     if (spot) {
         if (spot.ownerId != user.id) {
             const { startDate, endDate } = req.body
@@ -616,7 +672,7 @@ router.post('/:id/bookings', requireAuth, validateBookingDates, async (req, res)
             }
             const newBooking = Booking.build({
                 userId: user.id,
-                spotId: req.params.id,
+                spotId: spotId,
                 startDate: utcStartDate,
                 endDate: utcEndDate
             })

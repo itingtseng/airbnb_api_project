@@ -101,7 +101,14 @@ router.get('/current', requireAuth, async (req, res) => {
 // Edit a Booking
 router.put('/:id', requireAuth, validateBookingDates, async (req, res) => {
     const { user } = req
-    let savebooking = await Booking.findByPk(req.params.id)
+    const bookingId = parseInt(req.params.id, 10); // Ensure imageId is an integer
+
+    if (isNaN(bookingId)) {
+        return res.status(400).json({
+            message: "Invalid booking ID"
+        });
+    }
+    let savebooking = await Booking.findByPk(bookingId)
     if (savebooking) {
         if (user.id === savebooking.userId) {
             const { startDate, endDate } = req.body
@@ -114,8 +121,8 @@ router.put('/:id', requireAuth, validateBookingDates, async (req, res) => {
                     errors: errors.mapped()
                 })
             }
-            const conflict = await checkBookingConflict(utcStartDate, utcEndDate, req.params.id);
-            // console.log('this is booking id:' + req.params.id)
+            const conflict = await checkBookingConflict(utcStartDate, utcEndDate, bookingId);
+            // console.log('this is booking id:' + bookingId)
             if (conflict) {
                 return res.status(403).json({
                     message: "Sorry, this spot is already booked for the specified dates",
@@ -159,7 +166,14 @@ router.put('/:id', requireAuth, validateBookingDates, async (req, res) => {
 // Delete a Booking
 router.delete('/:id',requireAuth, async (req, res) => {
     const { user } = req;
-    let booking = await Booking.findOne({ where: { id: req.params.id } })
+    const bookingId = parseInt(req.params.id, 10); // Ensure imageId is an integer
+
+    if (isNaN(bookingId)) {
+        return res.status(400).json({
+            message: "Invalid booking ID"
+        });
+    }
+    let booking = await Booking.findOne({ where: { id: bookingId } })
     if (booking) {
         if (user.id === booking.userId) {
             const startDate = booking.startDate
