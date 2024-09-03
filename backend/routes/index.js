@@ -11,11 +11,11 @@ router.get("/api/csrf/restore", (req, res) => {
     });
 });
   
-// // Define your test route
-// router.post('/api/test', (req, res) => {
-//   console.log('Request Body:', req.body); // Log the request body for testing
-//   res.json({ success: true, requestBody: req.body });
-// });
+// Define your test route
+router.post('/api/test', (req, res) => {
+  console.log('Request Body:', req.body); // Log the request body for testing
+  res.json({ success: true, requestBody: req.body });
+});
 
 router.use('/api', apiRouter);
 
