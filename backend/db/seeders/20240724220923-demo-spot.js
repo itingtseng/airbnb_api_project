@@ -23,6 +23,7 @@ module.exports = {
         price: 100
       },
       {
+        ownerId: 2,
         address: 'addresstwo',
         city: 'citytwo',
         state: 'statetwo',
@@ -34,6 +35,7 @@ module.exports = {
         price: 100
       },
       {
+        ownerId: 3,
         address: 'addressthree',
         city: 'citythree',
         state: 'statethree',

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import * as sessionActions from '../../store/session';
@@ -15,11 +15,31 @@ function SignupFormModal() {
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
+  useEffect(() => {
+    const errs = {}
+    if (!username || username.length < 4) {
+      errs.username = 'Username field is required'
+    } if (!password || password.length < 6) {
+      errs.password = 'Password field is required'
+    } if (!email) {
+      errs.email = 'Email field is required'
+    } if (!email.includes('@')) {
+      errs.email = 'The provided email is invalid'
+    } if (!firstName) {
+      errs.firstName = 'FirstName field is required'
+    } if (!lastName) {
+      errs.lastName = 'LastName field is required'
+    } if (!confirmPassword) {
+      errs.confirmPassword = 'ConfirmPassword field is required'
+    }
+    setErrors(errs)
+  }, [username, password, email, firstName, lastName, confirmPassword])
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
       setErrors({});
-      return dispatch(
+      dispatch(
         sessionActions.signup({
           email,
           username,
@@ -35,6 +55,12 @@ function SignupFormModal() {
             setErrors(data.errors);
           }
         });
+      setEmail("")
+      setUsername("")
+      setFirstName("")
+      setLastName("")
+      setPassword("")
+      setConfirmPassword("")
     }
     return setErrors({
       confirmPassword: "Confirm Password field must be the same as the Password field"
@@ -107,7 +133,12 @@ function SignupFormModal() {
         {errors.confirmPassword && (
           <p>{errors.confirmPassword}</p>
         )}
-        <button type="submit">Sign Up</button>
+        <button
+          type="submit"
+          disabled={Object.keys(errors).length}
+        >
+          Sign Up
+        </button>
       </form>
     </>
   );

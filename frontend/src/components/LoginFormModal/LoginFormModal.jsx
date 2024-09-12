@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import * as sessionActions from '../../store/session';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
@@ -11,10 +11,20 @@ function LoginFormModal() {
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
+  useEffect(() => {
+    const errs = {}
+    if (!credential || credential.length < 4) {
+      errs.credential = 'Credential field is required'
+    } if (!password || password.length < 6) {
+      errs.password = 'Password field is required'
+    } 
+    setErrors(errs)
+  }, [credential, password])
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors({});
-    return dispatch(sessionActions.login({ credential, password }))
+    dispatch(sessionActions.login({ credential, password }))
       .then(closeModal)
       .catch(async (res) => {
         const data = await res.json();
@@ -22,7 +32,20 @@ function LoginFormModal() {
           setErrors(data.errors);
         }
       });
+    setCredential("")
+    setPassword("")
   };
+
+  const demoLogin = () => {
+    dispatch(sessionActions.login({ credential: "Demo-lition", password: "password" }))
+      .then(closeModal)
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) {
+          setErrors(data.errors);
+        }
+      });
+  }
 
   return (
     <>
@@ -37,6 +60,9 @@ function LoginFormModal() {
             required
           />
         </label>
+        {errors.credential && (
+          <p>{errors.credential}</p>
+        )}
         <label>
           Password
           <input
@@ -46,10 +72,18 @@ function LoginFormModal() {
             required
           />
         </label>
-        {errors.credential && (
-          <p>{errors.credential}</p>
+        {errors.password && (
+          <p>{errors.password}</p>
         )}
-        <button type="submit">Log In</button>
+        <button
+          type="submit"
+          disabled={Object.keys(errors).length}
+        >
+          Log In
+        </button>
+        <button type="button" onClick={demoLogin}>
+          Log In as Demo User
+        </button>
       </form>
     </>
   );

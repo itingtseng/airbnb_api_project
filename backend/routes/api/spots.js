@@ -569,6 +569,21 @@ router.post('/:id/reviews', requireAuth, validateReview, async (req, res) => {
             })
         }
         await newReview.save()
+        const reviews = await Review.findAll({
+            where: {
+                spotId: spotId
+            }
+        });
+    
+        const totalStars = reviews.reduce((sum, review) => sum + review.stars, 0);
+        const avgStarRating = totalStars / reviews.length;
+        const numReviews = reviews.length;
+    
+        // Update spot with the new average rating and number of reviews
+        spot.avgStarRating = avgStarRating;
+        spot.numReviews = numReviews;
+        await spot.save();
+        
         res.status(201).json({
             status: "success",
             message: "Successfully added new review",

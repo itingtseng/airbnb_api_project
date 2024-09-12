@@ -65,7 +65,7 @@ export const restoreUser = () => async (dispatch) => {
     const data = await response.json();
     dispatch(setUser(data.user));
     return response;
-};
+  };
   
 
 export const logout = () => async (dispatch) => {

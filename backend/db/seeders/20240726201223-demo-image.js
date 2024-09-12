@@ -13,6 +13,24 @@ module.exports = {
       {
         imageableId: 1,
         imageableType: 'spot',
+        url: '/images/dogs.jpg',
+        preview: false
+      },
+      {
+        imageableId: 2,
+        imageableType: 'spot',
+        url: '/images/cats.jpg',
+        preview: false
+      },
+      {
+        imageableId: 3,
+        imageableType: 'spot',
+        url: '/images/bulbasaur.jpg',
+        preview: false
+      },
+      {
+        imageableId: 1,
+        imageableType: 'spot',
         url: '../../assets/images/dog.jpg',
         preview: false
       },

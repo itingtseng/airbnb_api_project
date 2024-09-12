@@ -1,0 +1,43 @@
+.spot-tile {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    display: inline-block;
+    width: 180px;
+    text-align: center;
+  }
+  
+  .spot-thumbnail {
+    border-radius: 5px;
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+  }
+  
+  .spot-tile-link {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .spot-tile {
+    cursor: pointer; 
+  }
+  
+.spot-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.spot-image {
+  width: 150px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.spot-image:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease-in-out;
+}
