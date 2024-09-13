@@ -1,0 +1,77 @@
+/* Overlay for modal */
+.confirmation-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark background overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it is above other content */
+  }
+  
+  /* Modal container */
+  .confirmation-modal {
+    background-color: #fff; /* White background for modal */
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    text-align: center;
+  }
+  
+  /* Modal title */
+  .confirmation-modal h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  /* Modal message */
+  .confirmation-modal p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #555;
+  }
+  
+  /* Container for buttons */
+  .confirmation-buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  /* Confirm button (Yes, Delete Spot) */
+  .confirm-button {
+    background-color: #d9534f; /* Red for delete action */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .confirm-button:hover {
+    background-color: #c9302c; /* Darker red on hover */
+  }
+  
+  /* Cancel button (No, Keep Spot) */
+  .cancel-button {
+    background-color: #6c757d; /* Dark grey for keep action */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .cancel-button:hover {
+    background-color: #5a6268; /* Darker grey on hover */
+  }
+  
