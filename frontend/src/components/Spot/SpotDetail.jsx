@@ -142,15 +142,15 @@ function SpotDetail() {
             </>
           )}
         </h2>
+        {!isOwner && sessionUser && !hasUserPostedReview && (
+          <OpenModalButton
+            buttonText="Post Your Review"
+            modalComponent={
+              <NewReview spotId={spotId} onReviewSubmit={handleReviewSubmit} />
+            }
+          />
+        )}
       </div>
-      {!isOwner && sessionUser && !hasUserPostedReview && (
-        <OpenModalButton
-          buttonText="Post Your Review"
-          modalComponent={
-            <NewReview spotId={spotId} onReviewSubmit={handleReviewSubmit} />
-          }
-        />
-      )}
       <div className="reviews">
         {sortedReviews.length > 0 ? (
           sortedReviews.map((review) => {
