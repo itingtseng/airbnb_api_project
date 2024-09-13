@@ -37,7 +37,7 @@ function ManageSpot() {
         </NavLink>
       ) : (
         userSpots.map((spot) => (
-          <div key={spot.id} className="spot-tile" title={spot.name}>
+            <div key={spot.id} className={`spot-tile ${selectedSpotId === spot.id ? 'selected' : ''}`} title={spot.name}>
             <NavLink to={`/spots/${spot.id}`} className="spot-tile-link">
               <h2>{spot.name}</h2>
               <img
@@ -66,7 +66,7 @@ function ManageSpot() {
                   onConfirm={() => {
                     dispatch(deleteSpot(spot.id))
                       .then(() => {
-                        setSelectedSpotId(null);
+                        setSelectedSpotId(null); // Reset the selected spot after deletion
                       })
                       .catch((error) => {
                         console.error("Failed to delete spot:", error);

@@ -157,7 +157,7 @@ function NewSpot({ isEdit }) {
   return (
     <form className="new-spot" onSubmit={handleSubmit}>
       <h1>Create a New Spot</h1>
-      <h2>Where's your place located?</h2>
+      <h2>Where&#39;s your place located?</h2>
       <p>
         Guests will only get your exact address once they booked a reservation.
       </p>
@@ -244,7 +244,7 @@ function NewSpot({ isEdit }) {
       <p>{errors.description}</p>
       <h2>Create a title for your spot</h2>
       <p>
-        Catch guests' attention with a spot title that highlights what makes
+        Catch guests&#39; attention with a spot title that highlights what makes
         your place special.
       </p>
       <label>
