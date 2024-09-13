@@ -19,10 +19,32 @@ body {
   
   .profile-dropdown li {
     padding: 8px 16px;
-    cursor: pointer;
   }
   
-  .profile-dropdown li:hover {
+  .profile-dropdown li button{
+    padding: 10px 20px;
+    background-color: transparent;
+    color: black;
+    border: 2px solid lightgrey;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+
+  .profile-dropdown li button:hover {
+    background-color: #f0f0f0; /* Light grey background on hover */
+  }
+
+  .profile-dropdown li button:focus {
+    outline: none;
+  }
+
+  .profile-dropdown li button:active {
+    background-color: #e0e0e0; /* Slightly darker grey on click */
+  }
+  
+  .profile-dropdown li button:hover {
     background-color: #f1f1f1;
   }
   
@@ -33,6 +55,7 @@ body {
     font-size: 1.5em;
     display: flex;
     align-items: center;
+    margin: 0px;
   }
 
   nav {
@@ -71,6 +94,16 @@ body {
     display: flex;
     align-items: center;
     gap: 20px;
+  }
+
+  .nav-right button{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5em;
+    display: flex;
+    align-items: center;
+    margin: 0px;
   }
 
   .nav-left{

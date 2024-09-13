@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useModal } from '../../context/Modal';
-import * as sessionActions from '../../store/session';
-import './SignupForm.css';
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useModal } from "../../context/Modal";
+import * as sessionActions from "../../store/session";
+import "./SignupForm.css";
 
 function SignupFormModal() {
   const dispatch = useDispatch();
@@ -16,24 +16,30 @@ function SignupFormModal() {
   const { closeModal } = useModal();
 
   useEffect(() => {
-    const errs = {}
+    const errs = {};
     if (!username || username.length < 4) {
-      errs.username = 'Username field is required'
-    } if (!password || password.length < 6) {
-      errs.password = 'Password field is required'
-    } if (!email) {
-      errs.email = 'Email field is required'
-    } if (!email.includes('@')) {
-      errs.email = 'The provided email is invalid'
-    } if (!firstName) {
-      errs.firstName = 'FirstName field is required'
-    } if (!lastName) {
-      errs.lastName = 'LastName field is required'
-    } if (!confirmPassword) {
-      errs.confirmPassword = 'ConfirmPassword field is required'
+      errs.username = "Username field is required";
     }
-    setErrors(errs)
-  }, [username, password, email, firstName, lastName, confirmPassword])
+    if (!password || password.length < 6) {
+      errs.password = "Password field is required";
+    }
+    if (!email) {
+      errs.email = "Email field is required";
+    }
+    if (!email.includes("@")) {
+      errs.email = "The provided email is invalid";
+    }
+    if (!firstName) {
+      errs.firstName = "FirstName field is required";
+    }
+    if (!lastName) {
+      errs.lastName = "LastName field is required";
+    }
+    if (!confirmPassword) {
+      errs.confirmPassword = "ConfirmPassword field is required";
+    }
+    setErrors(errs);
+  }, [username, password, email, firstName, lastName, confirmPassword]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -45,7 +51,7 @@ function SignupFormModal() {
           username,
           firstName,
           lastName,
-          password
+          password,
         })
       )
         .then(closeModal)
@@ -55,22 +61,23 @@ function SignupFormModal() {
             setErrors(data.errors);
           }
         });
-      setEmail("")
-      setUsername("")
-      setFirstName("")
-      setLastName("")
-      setPassword("")
-      setConfirmPassword("")
+      setEmail("");
+      setUsername("");
+      setFirstName("");
+      setLastName("");
+      setPassword("");
+      setConfirmPassword("");
     }
     return setErrors({
-      confirmPassword: "Confirm Password field must be the same as the Password field"
+      confirmPassword:
+        "Confirm Password field must be the same as the Password field",
     });
   };
 
   return (
     <>
-      <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
+        <h1>Sign Up</h1>
         <label>
           Email
           <input
@@ -130,13 +137,8 @@ function SignupFormModal() {
             required
           />
         </label>
-        {errors.confirmPassword && (
-          <p>{errors.confirmPassword}</p>
-        )}
-        <button
-          type="submit"
-          disabled={Object.keys(errors).length}
-        >
+        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+        <button type="submit" disabled={Object.keys(errors).length}>
           Sign Up
         </button>
       </form>
