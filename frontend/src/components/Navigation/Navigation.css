@@ -110,3 +110,31 @@ body {
     display: flex;
     align-items: center;
   }
+
+  .profile-dropdown .thisisbutton li{
+    padding: 10px 20px;
+    background-color: transparent;
+    color: black;
+    border: 2px solid lightgrey;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin: 20px;
+  }
+
+  .profile-dropdown .thisisbutton li:hover {
+    background-color: #f0f0f0; /* Light grey background on hover */
+  }
+
+  .profile-dropdown .thisisbutton li:focus {
+    outline: none;
+  }
+
+  .profile-dropdown .thisisbutton li:active {
+    background-color: #e0e0e0; /* Slightly darker grey on click */
+  }
+  
+  .profile-dropdown .thisisbutton li:hover {
+    background-color: #f1f1f1;
+  }
