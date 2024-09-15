@@ -13,7 +13,7 @@ function Navigation({ isLoaded }) {
             <NavLink to="/" className="nav-link">
                 <img src={logo} alt="Logo" className="logo" />
                   <span className="app-name">Airbnb</span>
-                  <p>Home</p>
+                  {/* <p>Home</p> */}
             </NavLink>
         </div>
         <div className="nav-right">
