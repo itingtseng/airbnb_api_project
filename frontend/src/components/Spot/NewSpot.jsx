@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { createSpot, updateSpot, fetchSpotDetails } from "../../store/spots";
+import "./NewSpot.css";
 
 function NewSpot({ isEdit }) {
   const dispatch = useDispatch();
@@ -305,7 +306,7 @@ function NewSpot({ isEdit }) {
 ))}
 
       <p>{errors.previewImage}</p>
-      <button type="submit" disabled={Object.keys(errors).length}>
+      <button className='modal-button' type="submit" disabled={Object.keys(errors).length}>
         {isEdit ? "Update your Spot" : "Create Spot"}
       </button>
     </form>

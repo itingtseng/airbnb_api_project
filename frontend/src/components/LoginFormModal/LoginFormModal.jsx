@@ -74,12 +74,12 @@ function LoginFormModal() {
           />
         </label>
         {errors.password && <p>{errors.password}</p>}
-        <button type="submit" disabled={Object.keys(errors).length}>
+        <button className='modal-button' type="submit" disabled={Object.keys(errors).length}>
           Log In
         </button>
-        <button type="button" onClick={demoLogin}>
-          Log In as Demo User
-        </button>
+        <p className='demo-user' onClick={demoLogin}>
+          Demo User
+        </p>
       </form>
     </>
   );

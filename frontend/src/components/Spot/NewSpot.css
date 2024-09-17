@@ -1,0 +1,46 @@
+.new-spot {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    width: 400px; /* Fixed width for the form */
+    margin: 0 auto; /* Center the form horizontally */
+    padding: 20px;
+    border: 1px solid #ccc; /* Optional: adds a border to the form */
+    border-radius: 8px; /* Optional: rounds the form edges */
+    background-color: #f9f9f9; /* Optional: background color for the form */
+  }
+  
+  .new-spot label {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .new-spot input, 
+  .new-spot textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-left: 0px;
+  }
+  
+  /* .new-spot button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+   */
+  /* .new-spot button:hover {
+    background-color: #0056b3;
+  } */
+
+ 
+  

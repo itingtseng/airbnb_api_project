@@ -1,7 +1,9 @@
 form {
-    padding: 20px;
-  }
+  width: 100%;
+}
 
-  input{
-    margin-left: 8px;
-  }
+.demo-user {
+  cursor: pointer;
+  color: #007bff;
+  text-align: center;
+}

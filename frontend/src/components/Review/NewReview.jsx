@@ -72,7 +72,7 @@ function NewReview({ spotId, onReviewSubmit }) {
           ))}
         </div>
         <p>{errors.stars}</p>
-        <button type="submit" disabled={Object.keys(errors).length}>
+        <button className='modal-button' type="submit" disabled={Object.keys(errors).length}>
           Submit Your Review
         </button>
       </form>
