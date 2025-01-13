@@ -369,19 +369,40 @@ router.get('/:id', async (req, res) => {
   
 // Create a Spot
 router.post('/', requireAuth, validateSpot, async (req, res) => {
-    const { user } = req
-    const { address, city, state, country, lat, lng, name, description, price } = req.body
+    // Handle validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        console.log(errors.array()); // Log validation errors for debugging
+        return res.status(400).json({
+            message: "Validation error",
+            errors: errors.array(),
+        });
+    }
+
+    const { user } = req;
+    const { address, city, state, country, lat, lng, name, description, price } = req.body;
+
     const newSpot = Spot.build({
         ownerId: user.id,
-        address, city, state, country, lat, lng, name, description, price
-    })
-    await newSpot.save()
+        address,
+        city,
+        state,
+        country,
+        lat,
+        lng,
+        name,
+        description,
+        price,
+    });
+
+    await newSpot.save();
     res.status(201).json({
         status: "success",
         message: "Successfully created new spot",
-        data: newSpot
-    })
+        data: newSpot,
+    });
 });
+
 
 // Add an Image to a Spot based on the Spot's id
 router.post('/:id/images', requireAuth, async (req, res) => {
