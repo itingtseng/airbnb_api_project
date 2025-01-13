@@ -67,7 +67,7 @@ function NewSpot({ isEdit }) {
     if (!price) {
       errs.price = "Price field is required";
     } else if (price < 0) {
-      errs.price = "Price per day must be a positive number"
+      errs.price = "Price per day must be a positive number";
     }
     if (!previewImage.imageUrls) {
       errs.previewImage = "Preview Image URL is required";
@@ -87,7 +87,7 @@ function NewSpot({ isEdit }) {
     name,
     price,
     previewImage,
-  ]);  
+  ]);
 
   useEffect(() => {
     if (isEdit && spotId) {
@@ -107,59 +107,75 @@ function NewSpot({ isEdit }) {
       setName(spotDetails.name || "");
       setPrice(spotDetails.price || "");
       setPreviewImage({
-        imageUrls: spotDetails.SpotImages?.find(image => image.preview)?.url || '',
-        otherImageUrls: spotDetails.SpotImages?.filter(image => !image.preview).map(image => image.url) || ['', '', '', ''],
+        imageUrls:
+          spotDetails.SpotImages?.find((image) => image.preview)?.url || "",
+        otherImageUrls: spotDetails.SpotImages?.filter(
+          (image) => !image.preview
+        ).map((image) => image.url) || ["", "", "", ""],
       });
     }
   }, [spotDetails, isEdit]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setErrors({});
+    setErrors({}); // Clear previous errors
   
     const spotData = {
       country,
       address,
       city,
       state,
-      lat,
-      lng,
+      lat: Number(lat),
+      lng: Number(lng),
       description,
       name,
-      price,
+      price: Number(price),
       previewImage: previewImage.imageUrls,
       otherImageUrls: previewImage.otherImageUrls || [],
     };
   
-    const action = isEdit ? updateSpot(spotId, spotData) : createSpot(spotData);
+    if (isEdit && spotId) {
+      dispatch(updateSpot(spotId, spotData))
+        .then(() => {
+          navigate(`/spots/${spotId}`);
+        })
+        .catch((errorData) => {
+          console.error("Error updating spot:", errorData);
   
-    dispatch(action)
-      .then((updatedSpot) => {
-        // Reset form fields after submission
-        setCountry("");
-        setAddress("");
-        setCity("");
-        setState("");
-        setLat("");
-        setLng("");
-        setDescription("");
-        setName("");
-        setPrice("");
-        setPreviewImage({
-          imageUrls: "",
-          otherImageUrls: ["", "", "", ""],
+          if (errorData.errors) {
+            const formattedErrors = {};
+            errorData.errors.forEach((error) => {
+              formattedErrors[error.param] = error.msg;
+            });
+            setErrors(formattedErrors); // Display validation errors
+          } else {
+            setErrors({
+              general: "An unexpected error occurred. Please try again.",
+            });
+          }
         });
-        navigate(`/spots/${updatedSpot.id}`);
-      })
-      .catch((errorData) => {
-        if (errorData && errorData.errors) {
-          setErrors(errorData.errors);
-        } else {
-          setErrors({ general: "An error occurred. Please try again." });
-        }
-      });
-  };
+    } else {
+      dispatch(createSpot(spotData))
+        .then((newSpot) => {
+          navigate(`/spots/${newSpot.id}`);
+        })
+        .catch((errorData) => {
+          console.error("Error creating spot:", errorData);
   
+          if (errorData.errors) {
+            const formattedErrors = {};
+            errorData.errors.forEach((error) => {
+              formattedErrors[error.param] = error.msg;
+            });
+            setErrors(formattedErrors); // Display validation errors
+          } else {
+            setErrors({
+              general: "An unexpected error occurred. Please try again.",
+            });
+          }
+        });
+    }
+  };  
 
   return (
     <form className="new-spot" onSubmit={handleSubmit}>
@@ -219,7 +235,7 @@ function NewSpot({ isEdit }) {
           name="lat"
           placeholder="Latitude"
           value={lat}
-          onChange={(e) => setLat(e.target.value)}
+          onChange={(e) => setLat(parseFloat(e.target.value) || "")}
         />
       </label>
       <p>{errors.lat}</p>
@@ -230,7 +246,7 @@ function NewSpot({ isEdit }) {
           name="lng"
           placeholder="Longitude"
           value={lng}
-          onChange={(e) => setLng(e.target.value)}
+          onChange={(e) => setLng(parseFloat(e.target.value) || "")}
         />
       </label>
       <p>{errors.lng}</p>
@@ -276,7 +292,7 @@ function NewSpot({ isEdit }) {
           name="price"
           placeholder="Price per night (USD)"
           value={price}
-          onChange={(e) => setPrice(e.target.value)}
+          onChange={(e) => setPrice(parseFloat(e.target.value) || "")}
         />
       </label>
       <p>{errors.price}</p>
@@ -300,19 +316,29 @@ function NewSpot({ isEdit }) {
         />
       )}
       {previewImage.otherImageUrls.map((url, index) => (
-  <div key={index}>
-    <input
-      type="text"
-      placeholder="Image URL"
-      value={url}
-      onChange={(e) => handleInputChange(e, index + 1)} // +1 since the first input is for the preview image
-    />
-    {url && <img src={url} alt={`Other Image ${index + 1}`} style={{ width: '200px', height: '150px' }} />}
-  </div>
-))}
+        <div key={index}>
+          <input
+            type="text"
+            placeholder="Image URL"
+            value={url}
+            onChange={(e) => handleInputChange(e, index + 1)} // +1 since the first input is for the preview image
+          />
+          {url && (
+            <img
+              src={url}
+              alt={`Other Image ${index + 1}`}
+              style={{ width: "200px", height: "150px" }}
+            />
+          )}
+        </div>
+      ))}
 
       <p>{errors.previewImage}</p>
-      <button className='modal-button' type="submit" disabled={Object.keys(errors).length}>
+      <button
+        className="modal-button"
+        type="submit"
+        disabled={Object.keys(errors).length}
+      >
         {isEdit ? "Update your Spot" : "Create Spot"}
       </button>
     </form>
@@ -320,3 +346,4 @@ function NewSpot({ isEdit }) {
 }
 
 export default NewSpot;
+
