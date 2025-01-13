@@ -156,31 +156,28 @@ function NewSpot({ isEdit }) {
             navigate(`/spots/${updatedSpot.id}`);
         })
         .catch(async (errorData) => {
-            console.error("Error creating/updating spot:", errorData);
-
-            if (errorData instanceof Response) {
-                try {
-                    const parsedErrors = await errorData.json();
-                    console.log("Parsed Errors:", parsedErrors); // Log errors for debugging
-                    if (parsedErrors && parsedErrors.errors) {
-                        setErrors(parsedErrors.errors); // Display server validation errors
-                    } else {
-                        setErrors({
-                            general: "An unexpected error occurred. Please try again.",
-                        });
-                    }
-                } catch (parseError) {
-                    console.error("Failed to parse error response:", parseError);
-                    setErrors({
-                        general: "An unexpected error occurred. Please try again.",
-                    });
-                }
-            } else {
-                setErrors({
-                    general: "An unexpected error occurred. Please try again.",
-                });
-            }
-        });
+          if (errorData instanceof Response) {
+              try {
+                  const parsedErrors = await errorData.json();
+                  console.log("Parsed Backend Errors:", parsedErrors); // Debugging
+                  if (parsedErrors && parsedErrors.errors) {
+                      const backendErrors = {};
+                      parsedErrors.errors.forEach((error) => {
+                          backendErrors[error.param] = error.msg;
+                      });
+                      setErrors(backendErrors);
+                  } else {
+                      setErrors({ general: "An unexpected error occurred. Please try again." });
+                  }
+              } catch (parseError) {
+                  console.error("Failed to parse backend error response:", parseError);
+                  setErrors({ general: "An unexpected error occurred. Please try again." });
+              }
+          } else {
+              console.error("Unexpected error:", errorData);
+              setErrors({ general: "An unexpected error occurred. Please try again." });
+          }
+      });      
 };
 
   return (
@@ -241,7 +238,7 @@ function NewSpot({ isEdit }) {
           name="lat"
           placeholder="Latitude"
           value={lat}
-          onChange={(e) => setLat(e.target.value)}
+          onChange={(e) => setLat(parseFloat(e.target.value) || "")}
         />
       </label>
       <p>{errors.lat}</p>
@@ -252,7 +249,7 @@ function NewSpot({ isEdit }) {
           name="lng"
           placeholder="Longitude"
           value={lng}
-          onChange={(e) => setLng(e.target.value)}
+          onChange={(e) => setLng(parseFloat(e.target.value) || "")}
         />
       </label>
       <p>{errors.lng}</p>
@@ -298,7 +295,7 @@ function NewSpot({ isEdit }) {
           name="price"
           placeholder="Price per night (USD)"
           value={price}
-          onChange={(e) => setPrice(e.target.value)}
+          onChange={(e) => setPrice(parseFloat(e.target.value) || "")}
         />
       </label>
       <p>{errors.price}</p>
