@@ -20,18 +20,6 @@ module.exports = {
         userId: 1,
         spotId: 2,
         review: 'demo review',
-        stars: 1
-      },
-      {
-        userId: 1,
-        spotId: 3,
-        review: 'demo review',
-        stars: 3
-      },
-      {
-        userId: 2,
-        spotId: 1,
-        review: 'demo review',
         stars: 5
       },
       {
@@ -44,7 +32,13 @@ module.exports = {
         userId: 2,
         spotId: 3,
         review: 'demo review',
-        stars: 3
+        stars: 5
+      },
+      {
+        userId: 3,
+        spotId: 3,
+        review: 'demo review',
+        stars: 1
       },
     ], { validate: true });
   },
