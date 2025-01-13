@@ -120,67 +120,68 @@ function NewSpot({ isEdit }) {
     e.preventDefault();
     setErrors({});
 
+    // Convert necessary fields to numbers
     const spotData = {
-      country,
-      address,
-      city,
-      state,
-      lat: Number(lat),
-      lng: Number(lng),
-      description,
-      name,
-      price: Number(price),
-      previewImage: previewImage.imageUrls,
-      otherImageUrls: previewImage.otherImageUrls || [],
+        country,
+        address,
+        city,
+        state,
+        lat: Number(lat), // Convert to number
+        lng: Number(lng), // Convert to number
+        description,
+        name,
+        price: Number(price), // Convert to number
+        previewImage: previewImage.imageUrls,
+        otherImageUrls: previewImage.otherImageUrls || [],
     };
 
     const action = isEdit ? updateSpot(spotId, spotData) : createSpot(spotData);
 
     dispatch(action)
-      .then((updatedSpot) => {
-        // Reset form fields after submission
-        setCountry("");
-        setAddress("");
-        setCity("");
-        setState("");
-        setLat("");
-        setLng("");
-        setDescription("");
-        setName("");
-        setPrice("");
-        setPreviewImage({
-          imageUrls: "",
-          otherImageUrls: ["", "", "", ""],
-        });
-        navigate(`/spots/${updatedSpot.id}`);
-      })
-      .catch(async (errorData) => {
-        console.error("Error creating/updating spot:", errorData);
-
-        if (errorData instanceof Response) {
-          try {
-            const parsedErrors = await errorData.json();
-            console.log("Parsed Errors:", parsedErrors); // Log errors for debugging
-            if (parsedErrors && parsedErrors.errors) {
-              setErrors(parsedErrors.errors); // Display server validation errors
-            } else {
-              setErrors({
-                general: "An unexpected error occurred. Please try again.",
-              });
-            }
-          } catch (parseError) {
-            console.error("Failed to parse error response:", parseError);
-            setErrors({
-              general: "An unexpected error occurred. Please try again.",
+        .then((updatedSpot) => {
+            // Reset form fields after submission
+            setCountry("");
+            setAddress("");
+            setCity("");
+            setState("");
+            setLat("");
+            setLng("");
+            setDescription("");
+            setName("");
+            setPrice("");
+            setPreviewImage({
+                imageUrls: "",
+                otherImageUrls: ["", "", "", ""],
             });
-          }
-        } else {
-          setErrors({
-            general: "An unexpected error occurred. Please try again.",
-          });
-        }
-      });
-  };
+            navigate(`/spots/${updatedSpot.id}`);
+        })
+        .catch(async (errorData) => {
+            console.error("Error creating/updating spot:", errorData);
+
+            if (errorData instanceof Response) {
+                try {
+                    const parsedErrors = await errorData.json();
+                    console.log("Parsed Errors:", parsedErrors); // Log errors for debugging
+                    if (parsedErrors && parsedErrors.errors) {
+                        setErrors(parsedErrors.errors); // Display server validation errors
+                    } else {
+                        setErrors({
+                            general: "An unexpected error occurred. Please try again.",
+                        });
+                    }
+                } catch (parseError) {
+                    console.error("Failed to parse error response:", parseError);
+                    setErrors({
+                        general: "An unexpected error occurred. Please try again.",
+                    });
+                }
+            } else {
+                setErrors({
+                    general: "An unexpected error occurred. Please try again.",
+                });
+            }
+        });
+};
 
   return (
     <form className="new-spot" onSubmit={handleSubmit}>
