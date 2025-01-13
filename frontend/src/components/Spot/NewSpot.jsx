@@ -50,9 +50,13 @@ function NewSpot({ isEdit }) {
     }
     if (!lat) {
       errs.lat = "Latitude field is required";
+    } else if (lat < -90 || lat > 90) {
+      errs.lat = "Latitude must be between -90 and 90";
     }
     if (!lng) {
       errs.lng = "Longitude field is required";
+    } else if (lng < -180 || lng > 180) {
+      errs.lng = "Longitude must be between -180 and 180";
     }
     if (!description) {
       errs.description = "Description field is required";
@@ -62,9 +66,11 @@ function NewSpot({ isEdit }) {
     }
     if (!price) {
       errs.price = "Price field is required";
+    } else if (price < 0) {
+      errs.price = "Price per day must be a positive number"
     }
-    if (!previewImage) {
-      errs.previewImage = "PreviewImage field is required";
+    if (!previewImage.imageUrls) {
+      errs.previewImage = "Preview Image URL is required";
     }
     if (description.length < 30) {
       errs.description = "Please write at least 30 characters";
@@ -81,7 +87,7 @@ function NewSpot({ isEdit }) {
     name,
     price,
     previewImage,
-  ]);
+  ]);  
 
   useEffect(() => {
     if (isEdit && spotId) {
