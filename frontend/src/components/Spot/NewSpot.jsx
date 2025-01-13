@@ -67,7 +67,7 @@ function NewSpot({ isEdit }) {
     if (!price) {
       errs.price = "Price field is required";
     } else if (price < 0) {
-      errs.price = "Price per day must be a positive number"
+      errs.price = "Price per day must be a positive number";
     }
     if (!previewImage.imageUrls) {
       errs.previewImage = "Preview Image URL is required";
@@ -87,7 +87,7 @@ function NewSpot({ isEdit }) {
     name,
     price,
     previewImage,
-  ]);  
+  ]);
 
   useEffect(() => {
     if (isEdit && spotId) {
@@ -107,8 +107,11 @@ function NewSpot({ isEdit }) {
       setName(spotDetails.name || "");
       setPrice(spotDetails.price || "");
       setPreviewImage({
-        imageUrls: spotDetails.SpotImages?.find(image => image.preview)?.url || '',
-        otherImageUrls: spotDetails.SpotImages?.filter(image => !image.preview).map(image => image.url) || ['', '', '', ''],
+        imageUrls:
+          spotDetails.SpotImages?.find((image) => image.preview)?.url || "",
+        otherImageUrls: spotDetails.SpotImages?.filter(
+          (image) => !image.preview
+        ).map((image) => image.url) || ["", "", "", ""],
       });
     }
   }, [spotDetails, isEdit]);
@@ -116,23 +119,23 @@ function NewSpot({ isEdit }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors({});
-  
+
     const spotData = {
       country,
       address,
       city,
       state,
-      lat,
-      lng,
+      lat: Number(lat),
+      lng: Number(lng),
       description,
       name,
-      price,
+      price: Number(price),
       previewImage: previewImage.imageUrls,
       otherImageUrls: previewImage.otherImageUrls || [],
     };
-  
+
     const action = isEdit ? updateSpot(spotId, spotData) : createSpot(spotData);
-  
+
     dispatch(action)
       .then((updatedSpot) => {
         // Reset form fields after submission
@@ -153,7 +156,7 @@ function NewSpot({ isEdit }) {
       })
       .catch(async (errorData) => {
         console.error("Error creating/updating spot:", errorData);
-      
+
         if (errorData instanceof Response) {
           try {
             const parsedErrors = await errorData.json();
@@ -178,7 +181,6 @@ function NewSpot({ isEdit }) {
         }
       });
   };
-  
 
   return (
     <form className="new-spot" onSubmit={handleSubmit}>
@@ -319,19 +321,29 @@ function NewSpot({ isEdit }) {
         />
       )}
       {previewImage.otherImageUrls.map((url, index) => (
-  <div key={index}>
-    <input
-      type="text"
-      placeholder="Image URL"
-      value={url}
-      onChange={(e) => handleInputChange(e, index + 1)} // +1 since the first input is for the preview image
-    />
-    {url && <img src={url} alt={`Other Image ${index + 1}`} style={{ width: '200px', height: '150px' }} />}
-  </div>
-))}
+        <div key={index}>
+          <input
+            type="text"
+            placeholder="Image URL"
+            value={url}
+            onChange={(e) => handleInputChange(e, index + 1)} // +1 since the first input is for the preview image
+          />
+          {url && (
+            <img
+              src={url}
+              alt={`Other Image ${index + 1}`}
+              style={{ width: "200px", height: "150px" }}
+            />
+          )}
+        </div>
+      ))}
 
       <p>{errors.previewImage}</p>
-      <button className='modal-button' type="submit" disabled={Object.keys(errors).length}>
+      <button
+        className="modal-button"
+        type="submit"
+        disabled={Object.keys(errors).length}
+      >
         {isEdit ? "Update your Spot" : "Create Spot"}
       </button>
     </form>

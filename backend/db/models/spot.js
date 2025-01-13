@@ -66,6 +66,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         min: -90,
         max: 90,
+        isFloat: true,
       }
     },
     lng: {
@@ -74,6 +75,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         min: -180,
         max: 180,
+        isFloat: true,
       }
     },
     name: {
@@ -92,6 +94,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         min: 0.01,
+        isFloat: true,
       }
 
     }
