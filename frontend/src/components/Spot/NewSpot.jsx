@@ -118,67 +118,64 @@ function NewSpot({ isEdit }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setErrors({});
-
-    // Convert necessary fields to numbers
+    setErrors({}); // Clear previous errors
+  
     const spotData = {
-        country,
-        address,
-        city,
-        state,
-        lat: Number(lat), // Convert to number
-        lng: Number(lng), // Convert to number
-        description,
-        name,
-        price: Number(price), // Convert to number
-        previewImage: previewImage.imageUrls,
-        otherImageUrls: previewImage.otherImageUrls || [],
+      country,
+      address,
+      city,
+      state,
+      lat: Number(lat),
+      lng: Number(lng),
+      description,
+      name,
+      price: Number(price),
+      previewImage: previewImage.imageUrls,
+      otherImageUrls: previewImage.otherImageUrls || [],
     };
-
-    const action = isEdit ? updateSpot(spotId, spotData) : createSpot(spotData);
-
-    dispatch(action)
-        .then((updatedSpot) => {
-            // Reset form fields after submission
-            setCountry("");
-            setAddress("");
-            setCity("");
-            setState("");
-            setLat("");
-            setLng("");
-            setDescription("");
-            setName("");
-            setPrice("");
-            setPreviewImage({
-                imageUrls: "",
-                otherImageUrls: ["", "", "", ""],
-            });
-            navigate(`/spots/${updatedSpot.id}`);
+  
+    if (isEdit && spotId) {
+      dispatch(updateSpot(spotId, spotData))
+        .then(() => {
+          navigate(`/spots/${spotId}`);
         })
-        .catch(async (errorData) => {
-          if (errorData instanceof Response) {
-              try {
-                  const parsedErrors = await errorData.json();
-                  console.log("Parsed Backend Errors:", parsedErrors); // Debugging
-                  if (parsedErrors && parsedErrors.errors) {
-                      const backendErrors = {};
-                      parsedErrors.errors.forEach((error) => {
-                          backendErrors[error.param] = error.msg;
-                      });
-                      setErrors(backendErrors);
-                  } else {
-                      setErrors({ general: "An unexpected error occurred. Please try again." });
-                  }
-              } catch (parseError) {
-                  console.error("Failed to parse backend error response:", parseError);
-                  setErrors({ general: "An unexpected error occurred. Please try again." });
-              }
+        .catch((errorData) => {
+          console.error("Error updating spot:", errorData);
+  
+          if (errorData.errors) {
+            const formattedErrors = {};
+            errorData.errors.forEach((error) => {
+              formattedErrors[error.param] = error.msg;
+            });
+            setErrors(formattedErrors); // Display validation errors
           } else {
-              console.error("Unexpected error:", errorData);
-              setErrors({ general: "An unexpected error occurred. Please try again." });
+            setErrors({
+              general: "An unexpected error occurred. Please try again.",
+            });
           }
-      });      
-};
+        });
+    } else {
+      dispatch(createSpot(spotData))
+        .then((newSpot) => {
+          navigate(`/spots/${newSpot.id}`);
+        })
+        .catch((errorData) => {
+          console.error("Error creating spot:", errorData);
+  
+          if (errorData.errors) {
+            const formattedErrors = {};
+            errorData.errors.forEach((error) => {
+              formattedErrors[error.param] = error.msg;
+            });
+            setErrors(formattedErrors); // Display validation errors
+          } else {
+            setErrors({
+              general: "An unexpected error occurred. Please try again.",
+            });
+          }
+        });
+    }
+  };  
 
   return (
     <form className="new-spot" onSubmit={handleSubmit}>
