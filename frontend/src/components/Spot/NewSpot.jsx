@@ -240,7 +240,7 @@ function NewSpot({ isEdit }) {
           name="lat"
           placeholder="Latitude"
           value={lat}
-          onChange={(e) => setLat(e.target.value)}
+          onChange={(e) => setLat(Number(e.target.value) || "")}
         />
       </label>
       <p>{errors.lat}</p>
@@ -251,7 +251,7 @@ function NewSpot({ isEdit }) {
           name="lng"
           placeholder="Longitude"
           value={lng}
-          onChange={(e) => setLng(e.target.value)}
+          onChange={(e) => setLng(Number(e.target.value) || "")}
         />
       </label>
       <p>{errors.lng}</p>
@@ -297,7 +297,7 @@ function NewSpot({ isEdit }) {
           name="price"
           placeholder="Price per night (USD)"
           value={price}
-          onChange={(e) => setPrice(e.target.value)}
+          onChange={(e) => setPrice(Number(e.target.value) || "")}
         />
       </label>
       <p>{errors.price}</p>
