@@ -122,27 +122,35 @@ const addImagesToSpot = async (spotId, previewImage, otherImageUrls = []) => {
 };
 
 export const createSpot = (spotData) => async (dispatch) => {
-  try {
-    const response = await csrfFetch("/api/spots", {
-      method: "POST",
-      body: JSON.stringify(spotData),
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw errorData; // Re-throw the error data for the component to handle
+    try {
+      const response = await csrfFetch("/api/spots", {
+        method: "POST",
+        body: JSON.stringify(spotData),
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw errorData; // Throw the parsed error data directly
+      }
+  
+      const newSpot = await response.json();
+  
+      dispatch(addNewSpot(newSpot.data));
+  
+      if (spotData.previewImage || spotData.otherImageUrls?.length > 0) {
+        await addImagesToSpot(
+          newSpot.data.id,
+          spotData.previewImage,
+          spotData.otherImageUrls
+        );
+      }
+  
+      return newSpot.data;
+    } catch (error) {
+      console.error("Error creating spot:", error);
+      throw error; // Re-throw the error data
     }
-
-    const newSpot = await response.json();
-    dispatch(addNewSpot(newSpot.data));
-
-    return newSpot.data;
-  } catch (error) {
-    console.error("Error creating spot:", error);
-    throw error; // Pass the error to the calling component
-  }
-};
-
+  };
   
 
   export const updateSpot = (spotId, spotData) => async (dispatch) => {
