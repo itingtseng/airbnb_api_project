@@ -31,67 +31,67 @@ module.exports = {
       {
         imageableId: 1,
         imageableType: 'spot',
-        url: '../../assets/images/dog.jpg',
+        url: '/images/dogs.jpg',
         preview: false
       },
       {
         imageableId: 1,
         imageableType: 'review',
-        url: '../../assets/images/dog.jpg',
+        url: '/images/dogs.jpg',
         preview: false
       },
       {
         imageableId: 1,
         imageableType: 'review',
-        url: '../../assets/images/dog.jpg',
+        url: '/images/dogs.jpg',
         preview: false
       },
       {
         imageableId: 1,
         imageableType: 'review',
-        url: '../../assets/images/dog.jpg',
+        url: '/images/dogs.jpg',
         preview: false
       },
       {
         imageableId: 1,
         imageableType: 'review',
-        url: '../../assets/images/dog.jpg',
+        url: '/images/dogs.jpg',
         preview: false
       },
       {
         imageableId: 1,
         imageableType: 'review',
-        url: '../../assets/images/dog.jpg',
+        url: '/images/dogs.jpg',
         preview: false
       },
       {
         imageableId: 1,
         imageableType: 'review',
-        url: '../../assets/images/dog.jpg',
+        url: '/images/dogs.jpg',
         preview: false
       },
       {
         imageableId: 1,
         imageableType: 'review',
-        url: '../../assets/images/dog.jpg',
+        url: '/images/dogs.jpg',
         preview: false
       },
       {
         imageableId: 1,
         imageableType: 'review',
-        url: '../../assets/images/dog.jpg',
+        url: '/images/dogs.jpg',
         preview: false
       },
       {
         imageableId: 1,
         imageableType: 'review',
-        url: '../../assets/images/dog.jpg',
+        url: '/images/dogs.jpg',
         preview: false
       },
       {
         imageableId: 1,
         imageableType: 'review',
-        url: '../../assets/images/dog.jpg',
+        url: '/images/dogs.jpg',
         preview: false
       }
     ], { validate: true });
