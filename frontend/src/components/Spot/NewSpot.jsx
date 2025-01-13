@@ -125,68 +125,61 @@ function NewSpot({ isEdit }) {
       address,
       city,
       state,
-      lat,
-      lng,
+      lat: Number(lat),
+      lng: Number(lng),
       description,
       name,
-      price,
+      price: Number(price),
       previewImage: previewImage.imageUrls,
       otherImageUrls: previewImage.otherImageUrls || [],
     };
 
     const action = isEdit ? updateSpot(spotId, spotData) : createSpot(spotData);
 
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      setErrors({}); // Clear existing errors
-      
-      const spotData = {
-        country,
-        address,
-        city,
-        state,
-        lat,
-        lng,
-        description,
-        name,
-        price,
-        previewImage: previewImage.imageUrls,
-        otherImageUrls: previewImage.otherImageUrls || [],
-      };
-      
-      const action = isEdit ? updateSpot(spotId, spotData) : createSpot(spotData);
-    
-      try {
-        const updatedSpot = await dispatch(action);
-    
+    dispatch(action)
+      .then((updatedSpot) => {
         // Reset form fields after successful submission
-        setCountry("");
-        setAddress("");
-        setCity("");
-        setState("");
-        setLat("");
-        setLng("");
-        setDescription("");
-        setName("");
-        setPrice("");
-        setPreviewImage({
-          imageUrls: "",
-          otherImageUrls: ["", "", "", ""],
-        });
-    
+        resetFormFields();
+
+        // Navigate to the newly created/updated spot
         navigate(`/spots/${updatedSpot.id}`);
-      } catch (errorData) {
-        // Handle validation errors
+      })
+      .catch(async (errorData) => {
+        console.error("Error creating/updating spot:", errorData);
+
         if (errorData instanceof Response) {
+          // Parse the error response from the server
           const parsedErrors = await errorData.json();
-          console.log("Parsed Errors:", parsedErrors); // Log parsed errors
-          setErrors(parsedErrors.errors || { general: "An error occurred. Please try again." });
+          if (parsedErrors && parsedErrors.errors) {
+            setErrors(parsedErrors.errors); // Set specific validation errors
+          } else {
+            setErrors({
+              general: "An unexpected error occurred. Please try again.",
+            });
+          }
         } else {
-          console.error("Unexpected Error:", errorData);
-          setErrors({ general: "An error occurred. Please try again." });
+          setErrors({
+            general: "An unexpected error occurred. Please try again.",
+          });
         }
-      }
-    };    
+      });
+
+    // Helper function to reset form fields
+    const resetFormFields = () => {
+      setCountry("");
+      setAddress("");
+      setCity("");
+      setState("");
+      setLat("");
+      setLng("");
+      setDescription("");
+      setName("");
+      setPrice("");
+      setPreviewImage({
+        imageUrls: "",
+        otherImageUrls: ["", "", "", ""],
+      });
+    };
   };
 
   return (
