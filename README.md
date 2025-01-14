@@ -1,11 +1,52 @@
 # AirBnB Clone
 
-## Database Schema Design
+# Live Link
 
-![airbnb-database-schema]
+https://airbnb-api-project-ql98.onrender.com/
 
-[airbnb-database-schema]: https://appacademy-open-assets.s3.us-west-1.amazonaws.com/Modular-Curriculum/content/week-12/airbnb-db-schema.png
-[airbnb-db-diagram-info]: https://appacademy-open-assets.s3.us-west-1.amazonaws.com/Modular-Curriculum/content/week-12/airbnb-db-diagram-info.txt
+## Tech Stack
+
+### Frameworks and Libraries
+<div style="display: flex; align-items: center; gap: 10px;">
+  <img src="https://img.shields.io/badge/-Express-000000?logo=express&logoColor=white&logoWidth=20" alt="Express" height="25">
+  <img src="https://img.shields.io/badge/-Javascript-41454A?logo=javascript&logoColor=F7DF1E&logoWidth=20" alt="Javascript" height="25">
+  <img src="https://img.shields.io/badge/-React-263238?logo=react&logoColor=61DAFB&logoWidth=20" alt="React" height="25">
+  <img src="https://img.shields.io/badge/-Redux-764ABC?logo=redux&logoColor=white&logoWidth=20" alt="Redux" height="25">
+  <img src="https://img.shields.io/badge/-CSS3-1572B6?logo=css3&logoColor=white&logoWidth=20" alt="CSS3" height="25">
+  <img src="https://img.shields.io/badge/-HTML5-E34F26?logo=HTML5&logoColor=white&logoWidth=20" alt="HTML5" height="25">
+</div>
+
+### Database:
+
+<img src="https://img.shields.io/badge/-Sequelize-52B0E7?logo=sequelize&logoColor=white&logoWidth=20" alt="PostgreSQL" height="25">
+
+### Hosting:
+
+<img src="https://img.shields.io/badge/-Render-23c43e?logo=render&logoColor=white&logoWidth=20" alt="Render" height="25">
+
+### Connect With Me:
+
+[<img align="left" alt="TiffanyTseng | LinkedIn" width="22px" src="https://github.com/itingtseng/pointchurner/blob/main/assets/linkedin-logo.png" style="margin: 5px;" />][tiffany-linkedin]
+
+[tiffany-linkedin]: https://www.linkedin.com/in/ittseng/
+
+[<img align="left" alt="TiffanyTseng | Gmail" width="22px" src="https://github.com/itingtseng/pointchurner/blob/main/assets/email.png" style="margin: 5px;" />][tiffany-email]<br>
+
+[tiffany-email]: mailto:tifny7574@gmail.com
+
+<br></br>
+
+# Index
+
+[DB Schema](https://github.com/itingtseng/pointchurner/wiki/DB-Schema)
+
+# Spot
+
+<img src="https://github.com/itingtseng/pointchurner/tree/main/assets/ezgif-7-6e88535213.gif" alt="Demo Animation" width="830">
+
+# Review
+
+<img src="https://github.com/itingtseng/pointchurner/tree/main/assets/ezgif-7-3c21685753.gif" alt="Demo Animation" width="830">
 
 ## API Documentation
 
