@@ -42,11 +42,11 @@ https://airbnb-api-project-ql98.onrender.com/
 
 # Spot
 
-<img src="https://github.com/itingtseng/pointchurner/tree/main/assets/ezgif-7-6e88535213.gif" alt="Demo Animation" width="830">
+<img src="https://github.com/itingtseng/airbnb_api_project/blob/main/assets/ezgif-7-6e88535213.gif" alt="Demo Animation" width="830">
 
 # Review
 
-<img src="https://github.com/itingtseng/pointchurner/tree/main/assets/ezgif-7-3c21685753.gif" alt="Demo Animation" width="830">
+<img src="https://github.com/itingtseng/airbnb_api_project/blob/main/assets/ezgif-7-3c21685753.gif" alt="Demo Animation" width="830">
 
 ## API Documentation
 
