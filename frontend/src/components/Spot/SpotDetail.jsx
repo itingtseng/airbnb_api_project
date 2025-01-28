@@ -44,7 +44,7 @@ function SpotDetail() {
     numReviews,
   } = spotDetails;
   const largeImage = SpotImages.find((image) => image.preview) || SpotImages[0];
-  const smallImages = SpotImages.filter((image) => !image.preview).slice(0, 4);
+  const smallImages = SpotImages.filter((image) => !image.preview).slice(1, 5);
   const handleReserveClick = () => {
     alert("Feature coming soon");
   };

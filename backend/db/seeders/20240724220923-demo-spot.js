@@ -12,40 +12,40 @@ module.exports = {
     await Spot.bulkCreate([
       {
         ownerId: 3,
-        address: 'addressone',
-        city: 'cityone',
-        state: 'stateone',
-        country: 'countryone',
-        lat: -73.94697,
-        lng: 40.74588,
-        name: 'nameone',
-        description: 'descriptionone',
-        price: 100
+        address: '123 Maple Street',
+        city: 'Brooklyn',
+        state: 'New York',
+        country: 'United States',
+        lat: 40.7128,
+        lng: -73.9560,
+        name: 'Cozy Brooklyn Loft',
+        description: 'A stylish and cozy loft located in the heart of Brooklyn. Perfect for travelers who love city vibes.',
+        price: 150
       },
       {
         ownerId: 2,
-        address: 'addresstwo',
-        city: 'citytwo',
-        state: 'statetwo',
-        country: 'countrytwo',
-        lat: -74.94697,
-        lng: 39.74588,
-        name: 'nametwo',
-        description: 'descriptiontwo',
-        price: 100
+        address: '456 Oak Avenue',
+        city: 'San Francisco',
+        state: 'California',
+        country: 'United States',
+        lat: 37.7749,
+        lng: -122.4194,
+        name: 'Modern Bay Area Apartment',
+        description: 'A modern apartment with stunning views of the San Francisco Bay. Ideal for business trips or family getaways.',
+        price: 200
       },
       {
         ownerId: 1,
-        address: 'addressthree',
-        city: 'citythree',
-        state: 'statethree',
-        country: 'countrythree',
-        lat: -75.94697,
-        lng: 38.74588,
-        name: 'namethree',
-        description: 'descriptionthree',
-        price: 100
-      }
+        address: '789 Pine Lane',
+        city: 'Denver',
+        state: 'Colorado',
+        country: 'United States',
+        lat: 39.7392,
+        lng: -104.9903,
+        name: 'Mountain Retreat Cabin',
+        description: 'A serene cabin near the Rockies. Great for nature lovers and those seeking peace and quiet.',
+        price: 175
+      }      
     ], { validate: true });
   },
 
@@ -53,7 +53,7 @@ module.exports = {
     options.tableName = 'Spots';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      name: { [Op.in]: ['nameone', 'nametwo', 'namethree'] }
+      name: { [Op.in]: ['Cozy Brooklyn Loft', 'Modern Bay Area Apartment', 'Mountain Retreat Cabin'] }
     }, {});
   }
 };

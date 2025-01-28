@@ -1,12 +1,13 @@
 {
   "dependencies": {
-    "express-validator": "^7.1.0"
+    "dotenv": "^16.4.7",
+    "express-validator": "^7.1.0",
+    "sequelize": "^6.37.5"
   },
   "name": "airbnb_api_project",
   "version": "1.0.0",
   "description": "## Database Schema Design",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "install": "npm --prefix backend install backend",
     "dev:backend": "npm install --prefix backend start",
@@ -17,5 +18,8 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "sequelize-cli": "^6.6.2"
+  }
 }

@@ -13,87 +13,93 @@ module.exports = {
       {
         imageableId: 1,
         imageableType: 'spot',
-        url: '/images/dogs.jpg',
+        url: '/images/1-1.jpg',
+        preview: false
+      },
+      {
+        imageableId: 1,
+        imageableType: 'spot',
+        url: '/images/1-2.jpg',
+        preview: false
+      },
+      {
+        imageableId: 1,
+        imageableType: 'spot',
+        url: '/images/1-3.jpg',
+        preview: false
+      },
+      {
+        imageableId: 1,
+        imageableType: 'spot',
+        url: '/images/1-4.jpg',
+        preview: false
+      },
+      {
+        imageableId: 1,
+        imageableType: 'spot',
+        url: '/images/1-5.jpg',
         preview: false
       },
       {
         imageableId: 2,
         imageableType: 'spot',
-        url: '/images/cats.jpg',
+        url: '/images/2-1.jpg',
+        preview: false
+      },
+      {
+        imageableId: 2,
+        imageableType: 'spot',
+        url: '/images/2-2.jpg',
+        preview: false
+      },
+      {
+        imageableId: 2,
+        imageableType: 'spot',
+        url: '/images/2-3.jpg',
+        preview: false
+      },
+      {
+        imageableId: 2,
+        imageableType: 'spot',
+        url: '/images/2-4.jpg',
+        preview: false
+      },
+      {
+        imageableId: 2,
+        imageableType: 'spot',
+        url: '/images/2-5.jpg',
         preview: false
       },
       {
         imageableId: 3,
         imageableType: 'spot',
-        url: '/images/bulbasaur.jpg',
+        url: '/images/3-1.jpg',
         preview: false
       },
       {
-        imageableId: 1,
+        imageableId: 3,
         imageableType: 'spot',
-        url: '/images/dogs.jpg',
+        url: '/images/3-2.jpg',
         preview: false
       },
       {
-        imageableId: 1,
-        imageableType: 'review',
-        url: '/images/dogs.jpg',
+        imageableId: 3,
+        imageableType: 'spot',
+        url: '/images/3-3.jpg',
         preview: false
       },
       {
-        imageableId: 1,
-        imageableType: 'review',
-        url: '/images/dogs.jpg',
+        imageableId: 3,
+        imageableType: 'spot',
+        url: '/images/3-4.jpg',
         preview: false
       },
       {
-        imageableId: 1,
-        imageableType: 'review',
-        url: '/images/dogs.jpg',
+        imageableId: 3,
+        imageableType: 'spot',
+        url: '/images/3-5.jpg',
         preview: false
       },
-      {
-        imageableId: 1,
-        imageableType: 'review',
-        url: '/images/dogs.jpg',
-        preview: false
-      },
-      {
-        imageableId: 1,
-        imageableType: 'review',
-        url: '/images/dogs.jpg',
-        preview: false
-      },
-      {
-        imageableId: 1,
-        imageableType: 'review',
-        url: '/images/dogs.jpg',
-        preview: false
-      },
-      {
-        imageableId: 1,
-        imageableType: 'review',
-        url: '/images/dogs.jpg',
-        preview: false
-      },
-      {
-        imageableId: 1,
-        imageableType: 'review',
-        url: '/images/dogs.jpg',
-        preview: false
-      },
-      {
-        imageableId: 1,
-        imageableType: 'review',
-        url: '/images/dogs.jpg',
-        preview: false
-      },
-      {
-        imageableId: 1,
-        imageableType: 'review',
-        url: '/images/dogs.jpg',
-        preview: false
-      }
     ], { validate: true });
   },
 
